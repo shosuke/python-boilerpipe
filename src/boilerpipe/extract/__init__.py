@@ -27,11 +27,17 @@ class Extractor(object):
     - CanolaExtractor
     """
     extractor = None
-    source    = None
-    data      = None
-    headers   = {'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.162 Safari/535.19'}
-    
-    def __init__(self, extractor):
+    source = None
+    data = None
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.162 Safari/535.19'}
+
+    def __init__(self, extractor='ArticleExtractor', **kwargs):
+
+        if kwargs.get('url'):
+            self.setUrl(kwargs['url'])
+        elif kwargs.get('html'):
+            self.setHtml(kwargs['html'])
+
         try:
             # make it thread-safe
             if threading.activeCount() > 1:
@@ -46,6 +52,7 @@ class Extractor(object):
 
 
     def setUrl(self, url):
+        print self.headers
         response = requests.get(url, headers=self.headers)
         content_type = response.headers.get('content-type')
         if content_type.lower().startswith('text/html'):
