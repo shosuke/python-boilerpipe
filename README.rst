@@ -34,6 +34,15 @@ If no extractor is passed the DefaultExtractor will be used by default. Addition
 
     from boilerpipe.extract import Extractor
     extractor = Extractor(extractor='ArticleExtractor', url=your_url)
+    extractor.process()
+
+    or
+
+    from boilerpipe.extract import Extractor
+    extractor = Extractor(extractor='ArticleExtractor')
+    extractor.setUrl(your_url)
+    extractor.process()
+
 
 Then, to extract relevant content:
 

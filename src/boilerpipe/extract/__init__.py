@@ -31,7 +31,14 @@ class Extractor(object):
     data = None
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.162 Safari/535.19'}
 
-    def __init__(self, extractor='ArticleExtractor', **kwargs):
+    def __init__(self, *args, **kwargs):
+
+        if len(args) == 0:
+            extractor = 'ArticleExtractor'
+        elif len(args) == 1:
+            extractor = args[0]
+        else:
+            raise Exception('Invalid extractor param')
 
         if kwargs.get('url'):
             self.setUrl(kwargs['url'])
@@ -52,7 +59,6 @@ class Extractor(object):
 
 
     def setUrl(self, url):
-        print self.headers
         response = requests.get(url, headers=self.headers)
         content_type = response.headers.get('content-type')
         if content_type.lower().startswith('text/html'):
