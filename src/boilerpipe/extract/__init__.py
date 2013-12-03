@@ -27,6 +27,7 @@ class Extractor(object):
     - CanolaExtractor
     """
     extractor = None
+    extractor_name = None
     source = None
     data = None
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.162 Safari/535.19'}
@@ -39,6 +40,7 @@ class Extractor(object):
             extractor = args[0]
         else:
             raise Exception('Invalid extractor param')
+        self.extractor_name = extractor
 
         if kwargs.get('url'):
             self.setUrl(kwargs['url'])
@@ -53,7 +55,7 @@ class Extractor(object):
             lock.acquire()
             
             self.extractor = jpype.JClass(
-                "de.l3s.boilerpipe.extractors." + extractor).INSTANCE
+                "de.l3s.boilerpipe.extractors." + self.extractor_name).INSTANCE
         finally:
             lock.release()
 
