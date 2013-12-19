@@ -2,7 +2,10 @@
 import jpype
 import requests
 import socket
-import chardet
+try:
+    import cchardet as chardet
+except ImportError:
+    import chardet
 import threading
 
 socket.setdefaulttimeout(15)
